@@ -1,5 +1,5 @@
 {
-    "name": "igaster/laravel-theme",
+    "name": "igaster/laravel-model-options",
 	"description": "Store an Options array in a JSON column. Get/Set values as if they were seperate keys in the Database",
     "keywords": ["model-options", "model-settings", "options-json", "settings-json", "laravel-5.x", "package", "trait"],
     "license": "MIT",

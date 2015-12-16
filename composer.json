@@ -1,0 +1,23 @@
+{
+    "name": "igaster/laravel-theme",
+	"description": "Store an Options array in a JSON column. Get/Set values as if they were seperate keys in the Database",
+    "keywords": ["model-options", "model-settings", "options-json", "settings-json", "laravel-5.x", "package", "trait"],
+    "license": "MIT",
+    "homepage": "https://github.com/igaster/laravel-theme",
+    "authors": [
+        {
+            "name": "Giannis Gasteratos",
+            "email": "igasteratos@gmail.com"
+        }
+    ],	
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.*"
+    },
+    "autoload": {
+        "psr-4" : {
+            "igaster\\modelOptions\\" : "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}

@@ -1,6 +1,5 @@
-<?php
+<?php namespace igaster\modelOptions;
 
-namespace App\Traits;
 
 
 /**********************************

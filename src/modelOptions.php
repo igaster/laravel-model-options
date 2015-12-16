@@ -1,7 +1,5 @@
 <?php namespace igaster\modelOptions;
 
-
-
 /**********************************
     
     1.Create a column in migrations:
@@ -24,7 +22,7 @@
 
 trait modelOptions {
 
-
+    // Laravel mutators: get options
     public function getOptionsAttribute($value){
         if ($value == null)
             return [];
@@ -32,10 +30,12 @@ trait modelOptions {
         return json_decode($value, true);
     }
 
+    // Laravel mutators: set options
     public function setOptionsAttribute($value){
         $this->attributes['options'] = json_encode($value);
     }
 
+    // Return  valid keys from options array 
     public function __get($key) {
         if (in_array($key, $this->validOptions))
             if(array_key_exists($key, $this->options))
@@ -46,6 +46,7 @@ trait modelOptions {
         return parent::__get($key);
     }
 
+    // Set valid keys in options array 
     public function __set($key, $value) {
         if (in_array($key, $this->validOptions)) {
             $options = $this->options;

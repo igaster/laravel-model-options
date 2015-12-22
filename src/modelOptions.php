@@ -35,24 +35,59 @@ trait modelOptions {
         $this->attributes['options'] = json_encode($value);
     }
 
-    // Return  valid keys from options array 
-    public function __get($key) {
-        if (in_array($key, $this->validOptions))
-            if(array_key_exists($key, $this->options))
-                return ($this->options[$key]);
-            else
-                return null;
 
-        return parent::__get($key);
+    //----------------------------------------
+    protected $modelOptions_handled;
+
+    // Return  valid keys from options array 
+    public function modelOptions_get($key) {
+        $this->modelOptions_handled = false;
+        if (in_array($key, $this->validOptions)){
+            $result = null;
+            
+            if(array_key_exists($key, $this->options))
+                $result = $this->options[$key];
+            
+            $this->modelOptions_handled = true;
+            
+            return $result;
+        }
     }
 
     // Set valid keys in options array 
-    public function __set($key, $value) {
+    public function modelOptions_set($key, $value) {
+        $this->modelOptions_handled = false;
+
         if (in_array($key, $this->validOptions)) {
             $options = $this->options;
             $options[$key] = $value;
             $this->options = $options;
-        } else
-            parent::__set($key, $value);
+            $this->modelOptions_handled = true;
+        };
     }    
+
+    //--- copy these in your model if you need to implement __get __set methods
+
+    public function __get($key) {
+        // Handle modelOptions keys
+        $result=$this->modelOptions_get($key);
+        if ($this->modelOptions_handled)
+            return $result;
+        
+        //your code goes here
+        
+        return parent::__get($key);
+    }
+
+    public function __set($key, $value) {
+        // Handle modelOptions keys
+        $this->modelOptions_set($key, $value);
+        if ($this->modelOptions_handled)
+            return;
+
+        //your code goes here
+
+        parent::__set($key, $value);
+    }     
+
 }

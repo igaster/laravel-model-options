@@ -1,4 +1,7 @@
 ## Description
+[![Laravel](https://img.shields.io/badge/Laravel-5.x-orange.svg?style=flat-square)](http://laravel.com)
+[![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
+[![Downloads](https://img.shields.io/packagist/dt/igaster/laravel-model-options.svg?style=flat-square)](https://packagist.org/packages/igaster/laravel-model-options)
 
 A simple Trait to store an Options array in a JSON column. Get/Set values as if they were seperate keys in the Database
 
@@ -19,8 +22,10 @@ and install with `composer update`
 
         $table->json('options');
 
+note that older versions of mySql don't support the json type. In that case you can safely fallback to a string type:
 
-note that older versions of mySql don't support the json type. In that case you can safely fallback to a string type.
+        $table->string('options');
+
 
 2. Use the Trait in the coresponding model:
 
@@ -52,7 +57,7 @@ use igaster\modelOptions\modelOptions {
 }
 ```
 
-and call them manually from your __get() / __set mehods:
+and call them manually from your `__get()` / `__set()` mehods:
 
 ```php
 //--- copy these in your model if you need to implement __get() __set() methods

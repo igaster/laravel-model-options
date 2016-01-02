@@ -19,17 +19,20 @@ and install with `composer update`
 
 1. Define a JSON key with name 'options' in your migration file:
 
-
-        $table->json('options');
+```php
+$table->json('options')->nullable();
+```
 
 note that older versions of mySql don't support the json type. In that case you can safely fallback to a string type:
 
-        $table->string('options');
+```php
+$table->string('options')->nullable();
+```
 
 
 2. Use the Trait in the coresponding model:
 
-        use igaster\modelOptions\modelOptions;
+        use \igaster\modelOptions\modelOptions;
 
 3. Define the valid option keys in model:
 

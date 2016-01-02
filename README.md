@@ -1,6 +1,7 @@
 ## Description
 [![Laravel](https://img.shields.io/badge/Laravel-5.x-orange.svg?style=flat-square)](http://laravel.com)
 [![License](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://tldrlegal.com/license/mit-license)
+[![Build Status](https://travis-ci.org/igaster/laravel-model-options.svg?branch=master)](https://travis-ci.org/igaster/laravel-model-options)
 [![Downloads](https://img.shields.io/packagist/dt/igaster/laravel-model-options.svg?style=flat-square)](https://packagist.org/packages/igaster/laravel-model-options)
 
 A simple Trait to store an Options array in a JSON column. Get/Set values as if they were seperate keys in the Database

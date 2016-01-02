@@ -92,7 +92,6 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals($model->option1, 15);
     }
 
-
     public function _test_not_interfere_with_normal_properties() {
         $model = $this->getNewModel();
 

@@ -14,7 +14,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
     public function setUp()
     {
         parent::setUp();
-        
+
         // -- Set  migrations
         $this->database->schema()->create('testing', function ($table) {
             $table->increments('id');
@@ -22,36 +22,40 @@ class ModelOptionsTest extends TestCaseWithDatbase
             $table->json('options')->nullable();
             $table->timestamps();
         });
-        
     }
 
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->database->schema()->drop('testing');
     }
 
     // -----------------------------------------------
 
-    public function getNewModel(){
+    public function getNewModel()
+    {
         $model = TestModel::create();
         return $this->reloadModel($model);
     }
 
-    public function reloadModel($model){
+    public function reloadModel($model)
+    {
         return TestModel::find($model->id);
     }
     // -----------------------------------------------
 
 
-    public function testPropertyAccess() {        
+    public function testPropertyAccess()
+    {
         $model = $this->getNewModel();
 
         $model->option1 = 10;
         $model->save();
-        $model->fresh();
+        $model = $model->fresh();
         $this->assertEquals($model->option1, 10);
     }
 
-    public function testArrayAccessSet() {
+    public function testArrayAccessSet()
+    {
         $model = $this->getNewModel();
         $model['option1'] = 11;
         $model->save();
@@ -59,7 +63,15 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals($model->option1, 11);
     }
 
-    public function testOperatorIncrease() {
+    public function testArrayAccessGet()
+    {
+        $model = $this->getNewModel();
+        $model->option1 = 14;
+        $this->assertEquals($model['option1'], 14);
+    }
+
+    public function testOperatorIncrease()
+    {
         $model = $this->getNewModel();
         $model->option1 = 12;
         $model->option1++;
@@ -68,20 +80,16 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals($model->option1, 13);
     }
 
-    public function testArrayAccessGet() {
+    public function testInvalidProperty()
+    {
         $model = $this->getNewModel();
-        $model->option1 = 14;
-        $this->assertEquals($model['option1'], 14);
-    }
-
-    public function testInvalidProperty() {
-        $model = $this->getNewModel();
-        $this->setExpectedException('Illuminate\Database\QueryException');
+        $this->expectException(\Illuminate\Database\QueryException::class);
         $model->option2 = 99;
         $model->save();
     }
 
-    public function test_it_saves_options_in_database() {
+    public function test_it_saves_options_in_database()
+    {
         $model = $this->getNewModel();
 
         $model->option1 = 15;
@@ -92,7 +100,8 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals($model->option1, 15);
     }
 
-    public function _test_not_interfere_with_normal_properties() {
+    public function test_not_interfere_with_normal_properties()
+    {
         $model = $this->getNewModel();
 
         $model->option1 = 16;
@@ -107,4 +116,25 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals(16, $model->option1);
         $this->assertEquals(17, $model->testValue);
     }
+
+    public function test_not_interfere_with_array_access_normal_properties()
+    {
+        $model = $this->getNewModel();
+
+        $model['option1'] = 16;
+        $model['testValue'] = 17;
+
+        $this->assertEquals(16, $model['option1']);
+        $this->assertEquals(17, $model['testValue']);
+
+        $model->save();
+        $model=$this->reloadModel($model);
+
+        $this->assertEquals(16, $model['option1']);
+        $this->assertEquals(17, $model['testValue']);
+
+        $this->assertEquals(16, $model->option1);
+        $this->assertEquals(17, $model->testValue);
+    }
+
 }

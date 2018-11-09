@@ -4,8 +4,8 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class TestModel extends Eloquent
 {
-	use \igaster\modelOptions\modelOptions;
+    use \igaster\modelOptions\modelOptions;
 
     protected $table = 'testing';
-	protected $validOptions = ['option1'];
+    protected $validOptions = ['option1'];
 }

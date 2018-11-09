@@ -43,11 +43,12 @@ class TestCaseWithDatbase extends TestCase
 
         // $this->database->schema()->create('TableName', function ($table) {
         //     $table->increments('id');
-        // });        
+        // });
     }
 
-    public function tearDown() {
-    	// Drop tables here. ie:
+    public function tearDown()
+    {
+        // Drop tables here. ie:
         // $this->database->schema()->drop('TableName');
     }
 
@@ -55,7 +56,7 @@ class TestCaseWithDatbase extends TestCase
 
     public function testDatabaseConnection()
     {
-    	$this->assertInstanceOf('Illuminate\Database\SQLiteConnection', $this->database->connection());
+        $this->assertInstanceOf('Illuminate\Database\SQLiteConnection', $this->database->connection());
     }
 
     // -----------------------------------------------
@@ -69,7 +70,9 @@ class TestCaseWithDatbase extends TestCase
         $count = $database->table($table)->where($data)->count();
 
         $this->assertGreaterThan(0, $count, sprintf(
-            'Unable to find row in database table [%s] that matched attributes [%s].', $table, json_encode($data)
+            'Unable to find row in database table [%s] that matched attributes [%s].',
+            $table,
+            json_encode($data)
         ));
 
         return $this;
@@ -82,9 +85,11 @@ class TestCaseWithDatbase extends TestCase
         $count = $database->table($table)->where($data)->count();
 
         $this->assertEquals(0, $count, sprintf(
-            'Found unexpected records in database table [%s] that matched attributes [%s].', $table, json_encode($data)
+            'Found unexpected records in database table [%s] that matched attributes [%s].',
+            $table,
+            json_encode($data)
         ));
 
         return $this;
     }
-}    
+}

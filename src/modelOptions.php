@@ -1,7 +1,9 @@
-<?php namespace igaster\modelOptions;
+<?php
+
+namespace igaster\modelOptions;
 
 /**********************************
-    
+
     1.Create a column in migrations:
 
         $table->json('options');
@@ -20,42 +22,68 @@
 **********************************/
 
 
-trait modelOptions {
+trait modelOptions
+{
 
     // Laravel mutators: get options
-    public function getOptionsAttribute($value){
-        if ($value == null)
+    public function getOptionsAttribute($value)
+    {
+        if ($value == null) {
             return [];
+        }
 
         return json_decode($value, true);
     }
 
     // Laravel mutators: set options
-    public function setOptionsAttribute($value){
+    public function setOptionsAttribute($value)
+    {
         $this->attributes['options'] = json_encode($value);
     }
 
+    // ArrayAccess interface
+
+    public function offsetSet($key, $value)
+    {
+        if (in_array($key, $this->validOptions)) {
+            $this->$key = $value;
+        } else {
+            parent::offsetSet($key, $value);
+        }
+    }
+
+    public function offsetGet($key)
+    {
+        if (in_array($key, $this->validOptions)) {
+            return $this->$key;
+        } else {
+            return parent::offsetGet($key);
+        }
+    }
 
     //----------------------------------------
     protected $modelOptions_handled;
 
-    // Return  valid keys from options array 
-    public function modelOptions_get($key) {
+    // Return  valid keys from options array
+    public function modelOptions_get($key)
+    {
         $this->modelOptions_handled = false;
-        if (in_array($key, $this->validOptions)){
+        if (in_array($key, $this->validOptions)) {
             $result = null;
-            
-            if(array_key_exists($key, $this->options))
+
+            if (array_key_exists($key, $this->options)) {
                 $result = $this->options[$key];
-            
+            }
+
             $this->modelOptions_handled = true;
-            
+
             return $result;
         }
     }
 
-    // Set valid keys in options array 
-    public function modelOptions_set($key, $value) {
+    // Set valid keys in options array
+    public function modelOptions_set($key, $value)
+    {
         $this->modelOptions_handled = false;
 
         if (in_array($key, $this->validOptions)) {
@@ -64,30 +92,33 @@ trait modelOptions {
             $this->options = $options;
             $this->modelOptions_handled = true;
         };
-    }    
+    }
 
     //--- copy these in your model if you need to implement __get __set methods
 
-    public function __get($key) {
+    public function __get($key)
+    {
         // Handle modelOptions keys
         $result=$this->modelOptions_get($key);
-        if ($this->modelOptions_handled)
+        if ($this->modelOptions_handled) {
             return $result;
-        
+        }
+
         //your code goes here
-        
+
         return parent::__get($key);
     }
 
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         // Handle modelOptions keys
         $this->modelOptions_set($key, $value);
-        if ($this->modelOptions_handled)
+        if ($this->modelOptions_handled) {
             return;
+        }
 
         //your code goes here
 
         parent::__set($key, $value);
-    }     
-
+    }
 }

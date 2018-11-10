@@ -3,25 +3,23 @@
 namespace igaster\modelOptions;
 
 /**********************************
-
-    1.Create a column in migrations:
-
-        $table->json('options');
-
-    2.Use trait in Model:
-
-        use igaster\modelOptions\modelOptions;
-
-    3.Define valid options keys in Model:
-
-        protected $validOptions=[
-            'option1',
-            'option2',
-        ];
-
-**********************************/
-
-
+ *
+ *  1.Create a column in migrations:
+ *
+ *    $table->json('options');
+ *
+ *  2.Use trait in Model:
+ *
+ *    use igaster\modelOptions\modelOptions;
+ *
+ *  3.Define valid options keys in Model:
+ *
+ *     protected $validOptions=[
+ *       'option1',
+ *       'option2',
+ *     ];
+ *
+ **********************************/
 trait modelOptions
 {
 
@@ -99,7 +97,7 @@ trait modelOptions
     public function __get($key)
     {
         // Handle modelOptions keys
-        $result=$this->modelOptions_get($key);
+        $result = $this->modelOptions_get($key);
         if ($this->modelOptions_handled) {
             return $result;
         }

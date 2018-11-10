@@ -11,6 +11,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
     // -----------------------------------------------
 
     private $model;
+
     public function setUp()
     {
         parent::setUp();
@@ -41,6 +42,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
     {
         return TestModel::find($model->id);
     }
+
     // -----------------------------------------------
 
 
@@ -96,7 +98,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $model->save();
         $this->assertEquals($model->option1, 15);
 
-        $model=$this->reloadModel($model);
+        $model = $this->reloadModel($model);
         $this->assertEquals($model->option1, 15);
     }
 
@@ -111,7 +113,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals(17, $model->testValue);
 
         $model->save();
-        $model=$this->reloadModel($model);
+        $model = $this->reloadModel($model);
 
         $this->assertEquals(16, $model->option1);
         $this->assertEquals(17, $model->testValue);
@@ -128,7 +130,7 @@ class ModelOptionsTest extends TestCaseWithDatbase
         $this->assertEquals(17, $model['testValue']);
 
         $model->save();
-        $model=$this->reloadModel($model);
+        $model = $this->reloadModel($model);
 
         $this->assertEquals(16, $model['option1']);
         $this->assertEquals(17, $model['testValue']);
